@@ -1,0 +1,74 @@
+apply plugin: 'com.android.application'
+
+android {
+    signingConfigs {
+        config {
+            storeFile file("../key.jks")
+            storePassword "Samsung"
+            keyAlias "key0"
+            keyPassword "Samsung"
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId = 'com.sec.helloworld'
+        minSdkVersion 25
+        targetSdkVersion 25
+        externalNativeBuild {
+            cmake {
+                cppFlags "-fexceptions -frtti -w -Wall -std=gnu++11"
+                arguments '-DANDROID_STL=c++_shared'
+            }
+        }
+    }
+    project.archivesBaseName = 'helloworld'
+    aaptOptions {
+        noCompress ''
+    }
+    buildTypes {
+        debug {
+            ndk {
+                abiFilters "x86_64", "armeabi-v7a"
+            }
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'),
+                    'proguard-rules.pro'
+            ndk {
+                abiFilters "x86_64", "armeabi-v7a"
+            }
+
+            signingConfig signingConfigs.config
+        }
+    }
+    packagingOptions {
+        pickFirst 'lib/x86_64/libc++_shared.so'
+        pickFirst 'lib/armeabi-v7a/libc++_shared.so'
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs += '../dali/lib'
+            assets.srcDirs += '../dali/assets'
+        }
+    }
+    lintOptions {
+        checkReleaseBuilds false
+    }
+    externalNativeBuild {
+        cmake {
+            version '3.10.2'
+            path 'src/main/cpp/CMakeLists.txt'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+}
