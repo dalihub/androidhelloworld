@@ -8,7 +8,7 @@ app
  |  |_main
  |     |_assets (All hello world specific assets, images, models - none so far)
  |     |_cpp (Contains hello-world-example.cpp, copy of dali/hello-world/app/src/main/cpp/hello-world-example.cpp)
- |     |_res<
+ |     |_res
  |
  |_dali (DALi folder, containes toolkit assets, fonts, libdali.so, headers)
     |_include (public DAli includes, android_native_dali_app_glue.h - Android DALi glue for native activity)
