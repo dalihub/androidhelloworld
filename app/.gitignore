@@ -2,3 +2,4 @@ build
 release
 .cxx
 .externalNativeBuild
+app.iml
